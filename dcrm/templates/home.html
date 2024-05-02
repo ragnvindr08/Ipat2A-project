@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<table class="table">
+    <thead>
+        <tr>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th>PHONE</th>
+        <th>ADDRESS</th>
+        <th>CITY</th>
+        <th>STATE</th>
+        <th>ZIPCODE</th>
+        <th>CREATED AT</th>
+        <th>UPDATE</th>
+        <th>DELETE</th>
+    </tr>
+    </thead>
+<tbody>
+    {% if records %}
+        {% for record in records %}
+            <tr>
+                <td>{{ record.first_name }} {{record.last_name}}</td>
+                <td>{{ record.email }}</td>
+                <td>{{ record.phone }}</td>
+                <td>{{ record.address }}</td>
+                <td>{{ record.city }}</td>
+                <td>{{ record.state }}</td>
+                <td>{{ record.zipcode }}</td>
+                <td>{{ record.created_at }}</td>
+                <td><a href="{% url 'update_record' record.id %}"><button class="btn btn-primary" value="{{ record.id }}">UPDATE</button></a></td>
+                <td><a href="{% url 'delete_record' record.id %}"><button class="btn btn-danger" value="{{ record.id }}">DELETE</button></a></td>
+            </tr>
+
+        {% endfor %}
+
+    {% endif %}
+
+</tbody>
+
+
+</table>
+
+{% else %}
+
+<div class="col-md-6 offset-md-3">
+<label for=""><h3>LOGIN</h3></label> <br>
+<br>
+<form action="{% url 'home' %}" method="POST">
+    {% csrf_token  %}
+    <div class="mb3">
+    <input class="form-control" type="text" placeholder="username" name="username" required>
+    </div> <br>
+    <div class="mb3">
+    <input class="form-control" type="password" placeholder="password" name="password" required>
+    </div> <br>
+    <div class="mb3">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
+        </div>
+    </div>
+</form>
+
+
+</div>
+
+{% endif %}
+
+
+<div class="col-md-6 offset-md-3">
+{% if messages %}
+
+        {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+{% endif %}
+</div>
+
+
+
+{% endblock %}
+
+

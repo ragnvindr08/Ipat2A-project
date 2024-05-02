@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Update Record</h1>
+
+<div class="container col-md-6">
+    <div class="row">
+        <form action="" method="POST">
+            {% csrf_token %}
+         
+            {{form.as_p}}
+             
+             <button type="submit">UPDATE RECORD</button>
+         </form>
+         
+    </div>
+</div>
+
+
+
+{% endblock %}
